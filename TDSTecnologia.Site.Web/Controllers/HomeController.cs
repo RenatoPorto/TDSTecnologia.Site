@@ -1,16 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using TDSTecnologia.Site.Infrastructure;
 
 namespace TDSTecnologia.Site.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly AppContexto _context;
+
+        public HomeController(AppContexto context)
         {
-            return View("Index");
+            _context = context;
+        }
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.CursoDao.ToListAsync());
         }
     }
 }
