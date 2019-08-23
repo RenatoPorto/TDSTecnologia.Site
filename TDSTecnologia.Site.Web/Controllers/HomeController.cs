@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using TDSTecnologia.Site.Core.Entities;
 using TDSTecnologia.Site.Infrastructure;
 
 namespace TDSTecnologia.Site.Web.Controllers
@@ -21,6 +22,18 @@ namespace TDSTecnologia.Site.Web.Controllers
         public IActionResult Novo()
         {
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Novo([Bind("Id,Nome,Descricao,QuantidadeAula,DataInicio")] Curso curso)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(curso);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(curso);
         }
     }
 }
