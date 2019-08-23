@@ -18,11 +18,15 @@ namespace TDSTecnologia.Site.Web.Controllers
         {
             return View(await _context.CursoDao.ToListAsync());
         }
+
+
         [HttpGet]
         public IActionResult Novo()
         {
             return View();
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Novo([Bind("Id,Nome,Descricao,QuantidadeAula,DataInicio")] Curso curso)
@@ -102,6 +106,7 @@ namespace TDSTecnologia.Site.Web.Controllers
 
             return View(curso);
         }
+
         [HttpPost, ActionName("Excluir")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConfirmarExclusao(int id)
@@ -112,5 +117,7 @@ namespace TDSTecnologia.Site.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        
+        
     }
 }
