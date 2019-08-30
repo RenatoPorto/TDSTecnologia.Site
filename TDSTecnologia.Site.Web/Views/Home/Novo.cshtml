@@ -1,4 +1,6 @@
-﻿@model TDSTecnologia.Site.Core.Entities.Curso
+﻿
+@model TDSTecnologia.Site.Core.Entities.Curso
+
 
 @{
     ViewData["Title"] = "Create";
@@ -9,11 +11,11 @@
 </div>
 <hr />
 <div class="row">
-    <div class="col-md-8 offset-2">
+    <div class="col-12 offset-2">
         <form asp-action="Novo" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <img src="#" name="arquivo" id="arquivo" height="300" width="300" class="border border-secondary rounded" style="display: none;" />
+                <input type="file" class="btn btn-primary form-control" name="arquivo" id="arquivo" onchange="CarregarImagem(this)" />
             </div>
             <div class="form-group">
                 <label for="arquivo" class="control-label"></label>
@@ -41,6 +43,16 @@
                 <span asp-validation-for="DataInicio" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Turno" class="control-label"></label>
+                <select asp-for="Turno" class="form-control">
+                    @foreach (DomTurno turno in Enum.GetValues(typeof(DomTurno)))
+                    {
+                        <option value="@turno.ToString()">@turno.Descricao()</option>
+                    }
+                </select>
+                <span asp-validation-for="Turno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-primary" />
             </div>
         </form>
@@ -55,7 +67,7 @@
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    $("#arquivo" ).show();
+                    $("#arquivo").show();
                     $("#arquivo").attr('src', e.target.result).width(300).height(300);
                 }
             }
